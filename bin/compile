@@ -7,7 +7,7 @@ CACHE_DIR=$2
 
 # pdftothml
 VERSION="0.39"
-DOWNLOAD=http://downloads.sourceforge.net/project/pdftohtml/pdftohtml/pdftohtml-${VERSION}/pdftohtml-${VERSION}.tar.gz
+DOWNLOAD=https://s3.amazonaws.com/third-party-binaries/pdftohtml-${VERSION}.tar.gz
 FILE_NAME=pdftohtml-${VERSION}.tar.gz
 
 mkdir -p $CACHE_DIR
