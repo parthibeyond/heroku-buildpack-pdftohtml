@@ -2,8 +2,8 @@
 
 set -ex
 
-BUILD_DIR=$1
-CACHE_DIR=$2
+BUILD_DIR=$1 # unused, but req'd by the heroku buildpack API
+CACHE_DIR=$2 # the contents of CACHE_DIR are persisted between builds
 
 # pdftothml
 VERSION="0.39"
@@ -14,24 +14,17 @@ mkdir -p $CACHE_DIR
 if ! [ -e $CACHE_DIR/$FILE_NAME ]; then
   echo "-----> downloading pdftohtmlr source"
   curl -L $DOWNLOAD > $CACHE_DIR/$FILE_NAME
+
+  echo "-----> building pdftohtmlr binaries from source"
+  cd $CACHE_DIR
+  tar -xzf $FILE_NAME
+  cd "pdftohtml-${VERSION}"
+  # OMG this is so terrible but necessary!!!
+  sed -i 's/GBool HtmlLink::isEqualDest/GBool isEqualDest/g' src/HtmlLinks.h
+  make
+  cd ../..
 else
   echo "file already exists $CACHE_DIR/$FILE_NAME"
 fi
 
-echo "-----> building pdftohtmlr binaries from source"
-cd $CACHE_DIR
-tar -xzf $FILE_NAME
-cd "pdftohtml-${VERSION}"
-# OMG this is so terrible but necessary!!!
-sed -i 's/GBool HtmlLink::isEqualDest/GBool isEqualDest/g' src/HtmlLinks.h
-make
-cd ../..
-
-echo "-----> Extracting pdftohtml binaries"
-mkdir -p $BUILD_DIR/vendor/pdftohtml
-cp -rf $CACHE_DIR/pdftohtml-$VERSION $BUILD_DIR/vendor/pdftohtml
-
-echo "-----> Linking binaries"
-mkdir -p $BUILD_DIR/bin
-cd $BUILD_DIR/bin
-ln -s ../vendor/pdftohtml/pdftohtml-$VERSION/src/pdftohtml .
+cp $CACHE_DIR/pdftohtml-${VERSION}/src/pdftohtml bin/
