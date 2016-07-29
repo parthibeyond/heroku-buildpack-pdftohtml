@@ -25,6 +25,7 @@ cd "pdftohtml-${VERSION}"
 # OMG this is so terrible but necessary!!!
 sed -i 's/GBool HtmlLink::isEqualDest/GBool isEqualDest/g' src/HtmlLinks.h
 make
+cd ../..
 
 echo "-----> Extracting pdftohtml binaries"
 mkdir -p $BUILD_DIR/vendor/pdftohtml
