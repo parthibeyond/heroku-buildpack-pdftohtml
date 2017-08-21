@@ -6,8 +6,8 @@ BUILD_DIR=$1 # unused, but req'd by the heroku buildpack API
 CACHE_DIR=$2 # the contents of CACHE_DIR are persisted between builds
 
 # pdftothml
-VERSION="0.39"
-DOWNLOAD=https://s3.amazonaws.com/third-party-binaries/pdftohtml-${VERSION}.tar.gz
+VERSION="0.40a"
+DOWNLOAD="https://downloads.sourceforge.net/project/pdftohtml/Experimental%20Versions/pdftohtml%200.40/pdftohtml-${VERSION}.tar.gz"
 FILE_NAME=pdftohtml-${VERSION}.tar.gz
 
 mkdir -p $CACHE_DIR
