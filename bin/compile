@@ -2,7 +2,8 @@
 
 set -ex
 
-BUILD_DIR=$1 # unused, but req'd by the heroku buildpack API
+BUILD_DIR=$1
+VENDOR_DIR="$BUILD_DIR/vendor"
 CACHE_DIR=$2 # the contents of CACHE_DIR are persisted between builds
 
 # pdftothml
@@ -27,4 +28,9 @@ else
   echo "file already exists $CACHE_DIR/$FILE_NAME"
 fi
 
-cp $CACHE_DIR/pdftohtml-${VERSION}/src/pdftohtml bin/
+cp $CACHE_DIR/pdftohtml-${VERSION}/src/pdftohtml $VENDOR_DIR
+
+PROFILE_PATH="$BUILD_DIR/.profile.d/pdftohtml.sh"
+ACTUAL_INSTALL_PATH="$HOME/vendor/pdftohtml"
+mkdir -p $(dirname $PROFILE_PATH)
+echo "export PATH=$ACTUAL_INSTALL_PATH/bin:\$PATH" >> $PROFILE_PATH
