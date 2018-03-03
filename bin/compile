@@ -7,7 +7,7 @@ CACHE_DIR=$2 # the contents of CACHE_DIR are persisted between builds
 
 # pdftothml
 VERSION="0.40a"
-DOWNLOAD="https://downloads.sourceforge.net/project/pdftohtml/Experimental%20Versions/pdftohtml%200.40/pdftohtml-${VERSION}.tar.gz"
+DOWNLOAD="https://svwh.dl.sourceforge.net/project/pdftohtml/Experimental%20Versions/pdftohtml%200.40/pdftohtml-${VERSION}.tar.gz"
 FILE_NAME=pdftohtml-${VERSION}.tar.gz
 
 mkdir -p $CACHE_DIR
